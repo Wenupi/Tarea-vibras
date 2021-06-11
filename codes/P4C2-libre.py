@@ -33,10 +33,9 @@ def m_angular(k):
 
 def omega_kn(k, n):
     """
-    Calcula ω igual al n-1ésimo cero de la función dividido por el
-    radio y multiplicado por c (es despejar ω)
-    de Bessel de orden m.
-
+    Calcula ω igual al n-ésimo cero de la función dividido por el
+    radio y multiplicado por c (es despejar ω) de la derivada de Bessel
+    de orden m.
     """
     return float(besseljzero(m_angular(k), n, derivative=1))*c/radio
 
