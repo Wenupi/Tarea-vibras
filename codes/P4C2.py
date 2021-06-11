@@ -3,6 +3,7 @@ from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from scipy.special import jv
+from scipy.optimize import fsolve
 
 """
 Constantes
@@ -22,6 +23,9 @@ sacado de tabla
 # Ceros de la función de Bessel de orden "m"
 #ceros_J_m = [jn_zeros(m, 10) for m in range(10)]
 #ceros_J_solo_m = jn_zeros(m, 10)
+primer0 = 3.242444822093764691446
+segundo0 = 0
+tercer0 = 9.532984858265578140957
 
 # Tiempos
 FPS = 10  # cuadros por segundo
@@ -49,7 +53,7 @@ def Zeta(r, theta, t):
     de separación de variables, Zeta=R(r)*Omega(omega)*T(t)
     """
     # Omega calculado con tablas para el "m" dado 
-    omega_prima = 3.242444822093764691446*c/radio
+    omega_prima = tercer0*c/radio  # puede ser primer0, segundo0 o tercer0
     
     T = np.sin(omega_prima*t)  # T(t)
     R = jv(m, omega_prima*r/c)  # R(r)
@@ -88,7 +92,7 @@ def paso_de_tiempo(i):
     ax.cla()
     ax.set_axis_off()
     z = Zeta(r, theta, t)  # calcula la deformación en cada punto
-    vmax = np.max(jv(m, np.linspace(0, 3.242444822093764691446, 100)))
+    vmax = np.max(jv(m, np.linspace(0, tercer0, 100)))
     # Plotea la superficie
     ax.plot_surface(x, y, z,
                     linewidth=0, cmap='Spectral', vmin=-vmax,
@@ -97,11 +101,11 @@ def paso_de_tiempo(i):
     ax.set_zlim(-1.1, 1.1)
     ax.set_xlim(-0.75, 0.75)
     ax.set_ylim(-0.75, 0.75)
-    omega = 6.165285202987488949229
+    omega = tercer0
     ax.set_title(
         f'Membrana pacman, m = {m}, ω={omega:.2f}',
         size=36, weight='bold', family='Fira Sans',
     )
 
 ani = FuncAnimation(fig, paso_de_tiempo, frames=cuadros, interval=1000/FPS, repeat=False)
-ani.save(f'membrana_pacman.gif', writer='ffmpeg')
+ani.save(f'membrana_pacman3.gif', writer='ffmpeg')
