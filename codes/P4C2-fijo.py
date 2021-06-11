@@ -14,7 +14,9 @@ Constantes
 """
 alpha = np.pi/4  # apertura
 radio = 1  # membrana de radio 1
-c = 0.75  # velocidad del sonido?
+sigma = 1  # densidad superficial
+tau = 0.5625*sigma  # tensión superficial
+c = np.sqrt(tau/sigma)  # velocidad del sonido
 
 # Tiempos
 FPS = 10  # cuadros por segundo
@@ -107,4 +109,4 @@ def paso_de_tiempo(i):
     )
 
 ani = FuncAnimation(fig, paso_de_tiempo, frames=cuadros, interval=1000/FPS, repeat=False)
-ani.save(f'gifs-fijos/k3-n3.gif', writer='ffmpeg')  # ir cambiando el nombre
+ani.save(f'gifs-fijos/k3-n3.gif', writer='Pillow')  # ir cambiando el nombre

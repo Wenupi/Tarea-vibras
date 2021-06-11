@@ -3,10 +3,8 @@ plot hay que cambiar "k" y "n" a mano y volver a correrlo
 """
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from scipy.special import jv
-from scipy.optimize import fsolve
 from mpmath import besseljzero
 
 """
@@ -14,7 +12,9 @@ Constantes
 """
 alpha = np.pi/4  # apertura
 radio = 1  # membrana de radio 1
-c = 0.75  # velocidad del sonido?
+sigma = 1  # densidad superficial
+tau = 0.5625*sigma  # tensión superficial
+c = np.sqrt(tau/sigma)  # velocidad del sonido
 
 # Tiempos
 FPS = 10  # cuadros por segundo
@@ -106,4 +106,4 @@ def paso_de_tiempo(i):
     )
 
 ani = FuncAnimation(fig, paso_de_tiempo, frames=cuadros, interval=1000/FPS, repeat=False)
-ani.save(f'gifs-libres/k3-n4.gif', writer='ffmpeg')  # ir cambiando el nombre
+ani.save(f'gifs-libres/k3-n4.gif', writer='Pillow')  # ir cambiando el nombre
